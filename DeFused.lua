@@ -651,7 +651,7 @@ function SMODS.INIT.DeFused()
 
 	local flag_bearer = SMODS.Joker:new("Flag Bearer", "flag_bearer", {extra = {
 		hand_add = 1, discard_sub = 1
-	}, mult = 0}, { x = 0, y = 0 }, flag_bearer_def, 3, 9, true, true, false, true)
+	}, mult = 0}, { x = 0, y = 0 }, flag_bearer_def, 2, 9, true, true, false, true)
 	SMODS.Sprite:new("j_flag_bearer", mod_obj.path, "j_flag_bearer.png", 71, 95, "asset_atli"):register();
 	flag_bearer:register()
 
