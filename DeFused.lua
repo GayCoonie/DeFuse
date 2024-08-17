@@ -34,6 +34,8 @@ function Card:update(dt)
 
   if G.STAGE == G.STAGES.RUN then
 
+
+
 	if self.ability.name == "Flip-Flop" then
 		if self.ability.extra.side == "mult" then
 			if (self.config.center.atlas ~= "j_flip_flop" or G.localization.descriptions["Joker"]["j_flip_flop"] ~= G.localization.descriptions["Joker"]["j_flip_flop_mult"]) then
@@ -46,6 +48,13 @@ function Card:update(dt)
 				G.localization.descriptions["Joker"]["j_flip_flop"] = G.localization.descriptions["Joker"]["j_flip_flop_chips"]
 				self.config.center.atlas = "j_flop_flip"
 				self:set_sprites(self.config.center)
+
+        if self.config.center.key == "j_f_original_character" then
+            self.ability.extra.mult = (G.jokers.config.card_limit - #G.jokers.cards) * 12
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra = self.ability.extra + 6 end
+            end
+        end
 			end
 		end
 	end
@@ -82,6 +91,17 @@ function Card:add_to_deck(from_debuff)
 		if self.ability.name == 'Star Oracle' then
 			G.consumeables:change_size(self.ability.extra.slots)
 		end
+
+      if self.ability.name == "Monday Menace" then
+            if G.jokers then 
+                G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+            end
+        end
+        if self.ability.name == "Original Character" then
+            if G.jokers then 
+                G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+            end
+        end
   	end
   	add_to_deckref(self, from_debuff)
 end
@@ -116,7 +136,19 @@ function Card:remove_from_deck(from_debuff)
 		if self.ability.name == 'Star Oracle' then
 			G.consumeables:change_size(-self.ability.extra.slots)
 		end
-	end
+
+        if self.ability.name == "Monday Menace" then
+            if G.jokers then 
+                G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+            end
+        end
+        if self.ability.name == "Original Character" then
+            if G.jokers then 
+                G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+            end
+end 	
+end
+
 	remove_from_deckref(self, from_debuff)
 end
 
@@ -1358,6 +1390,307 @@ function SMODS.INIT.DeFused()
                 }
     		end
 	end
+local big_loser_def = {
+    name = "Big Loser",
+    text = {
+        "Gain {C:attention}$4{} and {X:mult,C:white}X3{} Mult if",
+        "{C:attention}poker hand{} is a {C:attention}#1#{},",
+        "poker hand changes on",
+        "every matching hand"
+    }
+}
+
+local big_loser = SMODS.Joker:new("Big Loser", "f_big_loser", {
+    extra = { 
+        x_mult = 3,
+        dollars = 4,
+        poker_hand = "High Card"
+    }
+}, {x = 0, y = 0}, big_loser_def, 3, 10, true, true, true, true)
+SMODS.Sprite:new("j_f_big_loser", mod_obj.path, "j_f_big_loser.png", 71, 95, "asset_atli"):register();
+big_loser:register()
+
+function SMODS.Jokers.j_f_big_loser.loc_def(card)
+    return { card.ability.extra.poker_hand }
+end
+
+function SMODS.Jokers.j_f_big_loser.calculate(card, context)
+    if context.joker_main and context.cardarea == G.jokers then
+        if context.scoring_name == card.ability.extra.poker_hand then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local _poker_hands = {}
+                    for k, v in pairs(G.GAME.hands) do
+                        if v.visible and k ~= card.ability.to_do_poker_hand then _poker_hands[#_poker_hands+1] = k end
+                    end
+                    card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, pseudoseed('to_do'))
+                    return true
+                end
+            }))
+            ease_dollars(card.ability.extra.dollars) 
+            return {
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
+                Xmult_mod = card.ability.extra.x_mult
+            }
+        end
+    end
+end
+
+
+local tightrope_def = {
+    name = "Tight Rope",
+    text = {
+        "{X:red,C:white} X#1# {} Mult on {C:attention}final hand{}",
+        "of round. This Joker gains",
+        "{X:red,C:white} X0.75{} Mult when {C:attention}final{}",
+        "{C:attention}hand{} is played"
+    }
+}
+
+local tightrope = SMODS.Joker:new("Tight Rope", "f_tightrope", {
+    extra = { 
+        x_mult = 3
+    }
+}, {x = 0, y = 0}, tightrope_def, 3, 10, true, true, true, true)
+SMODS.Sprite:new("j_f_tightrope", mod_obj.path, "j_f_tightrope.png", 71, 95, "asset_atli"):register();
+tightrope:register()
+
+function SMODS.Jokers.j_f_tightrope.loc_def(card)
+    return { card.ability.extra.x_mult }
+end
+
+function SMODS.Jokers.j_f_tightrope.calculate(card, context)
+    if context.joker_main and context.cardarea == G.jokers then
+        if G.GAME.current_round.hands_left == 0 then
+            card.ability.extra.x_mult = card.ability.extra.x_mult + 0.75
+            G.E_MANAGER:add_event(Event({
+                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true end
+            }))
+            return {
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
+                Xmult_mod = card.ability.extra.x_mult
+            }
+        end
+    end
+end
+
+
+local monday_menace_def = {
+    name = "Monday Menace",
+    text = {
+        "{C:dark_edition}+1{} Joker Slot",
+        "Create a random {C:planet}Planet{} or {C:tarot}Tarot{}",
+        "card per 2 {C:attention}rerolls{} in the shop",
+        "{C:inactive,s:0.7}({C:green,s:0.7}#1#{}{C:inactive,s:0.7} rerolls left){}",
+        "{C:inactive,s:0.7}(Must have room){}"
+    }
+}
+
+local monday_menace = SMODS.Joker:new("Monday Menace", "f_monday_menace", {
+    extra = {
+        counter = 2
+    }
+}, {x = 0, y = 0}, monday_menace_def, 2, 16, true, true, true, true)
+SMODS.Sprite:new("j_f_monday_menace", mod_obj.path, "j_f_monday_menace.png", 71, 95, "asset_atli"):register();
+monday_menace:register()
+
+function SMODS.Jokers.j_f_monday_menace.loc_def(card)
+    return { card.ability.extra.counter }
+end
+
+function SMODS.Jokers.j_f_monday_menace.calculate(card, context)
+    if context.reroll_shop and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if card.ability.extra.counter == 1 then
+            local tarot_or_planet = pseudorandom_element({1, 2}, pseudoseed('monday_menace'))
+            if tarot_or_planet == 1 then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function() 
+                                local card = create_card('Tarot',G.consumeables, nil, nil, nil, nil, nil, 'car')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end}))   
+                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})                       
+                        return true
+                    end)}))
+            end
+            if tarot_or_planet == 2 then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function() 
+                                local card = create_card('Planet',G.consumeables, nil, nil, nil, nil, nil, '8ba')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end}))   
+                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})                       
+                        return true
+                    end)}))
+            end
+            card.ability.extra.counter = 2
+        else
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true end }))
+            card.ability.extra.counter = card.ability.extra.counter - 1
+        end
+    end
+end
+
+
+local typography_def = {
+    name = "Typography Joker",
+    text = {
+        "{C:blue}Common{} and {C:attention}Rare{} Jokers",
+        "each give {C:mult}+10{} Mult if played hand",
+        "contains no {C:attention}face cards{}"
+    }
+}
+
+local typography = SMODS.Joker:new("Typography Joker", "f_typography", {
+    extra = {
+        mult = 10
+    }
+}, {x = 0, y = 0}, typography_def, 2, 8, true, true, true, true)
+SMODS.Sprite:new("j_f_typography", mod_obj.path, "j_f_typography.png", 71, 95, "asset_atli"):register();
+typography:register()
+
+function SMODS.Jokers.j_f_typography.loc_def(card)
+    return { card.ability.extra.mult }
+end
+
+function SMODS.Jokers.j_f_typography.calculate(card, context)
+    if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 3) and card ~= context.other_joker then
+        local CheckForFaces = true
+        for k, v in ipairs(context.full_hand) do
+            CheckForFaces = CheckForFaces and not v:is_face()
+        end
+        if not CheckForFaces then
+            return nil
+        end
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                context.other_joker:juice_up(0.5, 0.5)
+                return true
+            end
+        })) 
+        return {
+            message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
+            mult_mod = card.ability.extra.mult
+        }
+    end
+end
+
+
+local party_animal_def = {
+    name = "Party Animal",
+    text = {
+        "This Joker gains {C:chips}+16{} Chips",
+        "when played hand is a",
+        "{C:attention}High Card{} or {C:attention}Pair{}",
+        "{C:inactive,s:0.7}(Currently {}{C:chips,s:0.7}+#1#{}{C:inactive,s:0.7} Chips){}"
+    }
+}
+
+local party_animal = SMODS.Joker:new("Party Animal", "f_party_animal", {
+    extra = {
+        chips = 0
+    }
+}, {x = 0, y = 0}, party_animal_def, 2, 8, true, true, true, true)
+SMODS.Sprite:new("j_f_party_animal", mod_obj.path, "j_f_party_animal.png", 71, 95, "asset_atli"):register();
+party_animal:register()
+
+function SMODS.Jokers.j_f_party_animal.loc_def(card)
+    return { card.ability.extra.chips }
+end
+
+function SMODS.Jokers.j_f_party_animal.calculate(card, context)
+    if context.joker_main and context.cardarea == G.jokers then
+        if (context.scoring_name == "High Card" or context.scoring_name == "Pair") then
+            card.ability.extra.chips = card.ability.extra.chips + 16
+            G.E_MANAGER:add_event(Event({
+                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true end
+            }))
+        end
+        return {
+            message = localize{type='variable',key='a_chips',vars={card.ability.extra.chips}},
+            chip_mod = card.ability.extra.chips,
+            colour = G.C.CHIPS
+        }
+    end
+end
+
+
+local fishclown_def = {
+    name = "Fishclown",
+    text = {
+        "{C:attention}Enhanced Cards{} gives",
+        "{X:mult,C:white}X1.5{} Mult when scored"
+    }
+}
+
+local fishclown = SMODS.Joker:new("Fishclown", "f_fishclown", {
+    extra = {
+        x_mult = 1.5
+    }
+}, {x = 0, y = 0}, fishclown_def, 3, 8, true, true, true, true)
+SMODS.Sprite:new("j_f_fishclown", mod_obj.path, "j_f_fishclown.png", 71, 95, "asset_atli"):register();
+fishclown:register()
+
+function SMODS.Jokers.j_f_fishclown.loc_def(card)
+    return { card.ability.extra.x_mult }
+end
+
+function SMODS.Jokers.j_f_fishclown.calculate(card, context)
+    if context.individual and context.cardarea == G.play and context.other_card.ability.set == 'Enhanced' then
+        return {
+            message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
+            Xmult_mod = card.ability.extra.x_mult,
+            card = card
+        }
+    end
+end
+
+
+
+local original_character_def = {
+    name = "Original Character",
+    text = {
+        "{C:dark_edition}+1{} Joker Slot",
+        "{C:mult}+12{} Mult for each",
+        "empty {C:attention}Joker{} slot",
+        "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+    }
+}
+
+local original_character = SMODS.Joker:new("Original Character", "f_original_character", {
+    extra = {
+        mult = 0
+    }
+}, {x = 0, y = 0}, original_character_def, 2, 10, true, true, true, true)
+SMODS.Sprite:new("j_f_original_character", mod_obj.path, "j_f_original_character.png", 71, 95, "asset_atli"):register();
+original_character:register()
+
+function SMODS.Jokers.j_f_original_character.loc_def(card)
+    return { card.ability.extra.mult }
+end
+
+function SMODS.Jokers.j_f_original_character.calculate(card, context)
+    if context.joker_main and context.cardarea == G.jokers and card.ability.extra.mult >= 0 then
+        return {
+            message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra } },
+            mult_mod = card.ability.extra.mult,
+        }
+    end
+end
 
 end
 
