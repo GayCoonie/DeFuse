@@ -1414,25 +1414,25 @@ function SMODS.Jokers.j_f_big_loser.loc_def(card)
     return { card.ability.extra.poker_hand }
 end
 
-function SMODS.Jokers.j_f_big_loser.calculate(card, context)
-    if context.joker_main and context.cardarea == G.jokers then
-        if context.scoring_name == card.ability.extra.poker_hand then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    local _poker_hands = {}
-                    for k, v in pairs(G.GAME.hands) do
-                        if v.visible and k ~= card.ability.to_do_poker_hand then _poker_hands[#_poker_hands+1] = k end
-                    end
-                    card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, pseudoseed('to_do'))
-                    return true
+function SMODS.Jokers.j_f_big_loser.calculate(self, context)
+            if context.joker_main and context.cardarea == G.jokers then
+                if context.scoring_name == self.ability.extra.poker_hand then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            local _poker_hands = {}
+                            for k, v in pairs(G.GAME.hands) do
+                                if v.visible and k ~= self.ability.to_do_poker_hand then _poker_hands[#_poker_hands+1] = k end
+                            end
+                            self.ability.extra.poker_hand = pseudorandom_element(_poker_hands, pseudoseed('to_do'))
+                            return true
+                        end
+                    }))
+                    ease_dollars(self.ability.extra.dollars) 
+                    return {
+                        message = localize { type = 'variable', key = 'a_xmult', vars = { self.ability.extra.x_mult } },
+                        Xmult_mod = self.ability.extra.x_mult
+                    }
                 end
-            }))
-            ease_dollars(card.ability.extra.dollars) 
-            return {
-                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
-                Xmult_mod = card.ability.extra.x_mult
-            }
-        end
     end
 end
 
@@ -1459,17 +1459,17 @@ function SMODS.Jokers.j_f_tightrope.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_f_tightrope.calculate(card, context)
-    if context.joker_main and context.cardarea == G.jokers then
-        if G.GAME.current_round.hands_left == 0 then
-            card.ability.extra.x_mult = card.ability.extra.x_mult + 0.75
-            G.E_MANAGER:add_event(Event({
-                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true end
-            }))
-            return {
-                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
-                Xmult_mod = card.ability.extra.x_mult
-            }
+function SMODS.Jokers.j_f_tightrope.calculate(self, context)
+           if context.joker_main and context.cardarea == G.jokers then
+                if G.GAME.current_round.hands_left == 0 then
+                    self.ability.extra.x_mult = self.ability.extra.x_mult + 0.75
+                    G.E_MANAGER:add_event(Event({
+                        func = function() card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true
+                        end}))
+                    return {
+                        message = localize { type = 'variable', key = 'a_xmult', vars = { self.ability.extra.x_mult } },
+                        Xmult_mod = self.ability.extra.x_mult
+}
         end
     end
 end
@@ -1498,49 +1498,49 @@ function SMODS.Jokers.j_f_monday_menace.loc_def(card)
     return { card.ability.extra.counter }
 end
 
-function SMODS.Jokers.j_f_monday_menace.calculate(card, context)
-    if context.reroll_shop and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if card.ability.extra.counter == 1 then
-            local tarot_or_planet = pseudorandom_element({1, 2}, pseudoseed('monday_menace'))
-            if tarot_or_planet == 1 then
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
+function SMODS.Jokers.j_f_monday_menace.calculate(self, context)
+           if context.reroll_shop and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                if self.ability.extra.counter == 1 then
+                    local tarot_or_planet = pseudorandom_element({1, 2}, pseudoseed('monday_menace'))
+                    if tarot_or_planet == 1 then
+                        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                         G.E_MANAGER:add_event(Event({
-                            func = function() 
-                                local card = create_card('Tarot',G.consumeables, nil, nil, nil, nil, nil, 'car')
-                                card:add_to_deck()
-                                G.consumeables:emplace(card)
-                                G.GAME.consumeable_buffer = 0
+                            func = (function()
+                                G.E_MANAGER:add_event(Event({
+                                    func = function() 
+                                        local card = create_card('Tarot',G.consumeables, nil, nil, nil, nil, nil, 'car')
+                                        card:add_to_deck()
+                                        G.consumeables:emplace(card)
+                                        G.GAME.consumeable_buffer = 0
+                                        return true
+                                    end}))   
+                            card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})                       
                                 return true
-                            end}))   
-                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})                       
-                        return true
-                    end)}))
-            end
-            if tarot_or_planet == 2 then
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
+                            end)}))
+                    end
+                    if tarot_or_planet == 2 then
+                        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                         G.E_MANAGER:add_event(Event({
-                            func = function() 
-                                local card = create_card('Planet',G.consumeables, nil, nil, nil, nil, nil, '8ba')
-                                card:add_to_deck()
-                                G.consumeables:emplace(card)
-                                G.GAME.consumeable_buffer = 0
+                            func = (function()
+                                G.E_MANAGER:add_event(Event({
+                                    func = function() 
+                                        local card = create_card('Planet',G.consumeables, nil, nil, nil, nil, nil, '8ba')
+                                        card:add_to_deck()
+                                        G.consumeables:emplace(card)
+                                        G.GAME.consumeable_buffer = 0
+                                        return true
+                                    end}))   
+                                    card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})                       
                                 return true
-                            end}))   
-                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})                       
-                        return true
-                    end)}))
-            end
-            card.ability.extra.counter = 2
-        else
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-                play_sound('tarot1')
-                card:juice_up(0.3, 0.5)
-                return true end }))
-            card.ability.extra.counter = card.ability.extra.counter - 1
+                            end)}))
+                    end
+                    self.ability.extra.counter = 2
+                else
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                        play_sound('tarot1')
+                        self:juice_up(0.3, 0.5)
+                        return true end }))
+                    self.ability.extra.counter = self.ability.extra.counter - 1
         end
     end
 end
@@ -1567,25 +1567,25 @@ function SMODS.Jokers.j_f_typography.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_f_typography.calculate(card, context)
-    if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 3) and card ~= context.other_joker then
-        local CheckForFaces = true
-        for k, v in ipairs(context.full_hand) do
-            CheckForFaces = CheckForFaces and not v:is_face()
-        end
-        if not CheckForFaces then
-            return nil
-        end
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                context.other_joker:juice_up(0.5, 0.5)
-                return true
-            end
-        })) 
-        return {
-            message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
-            mult_mod = card.ability.extra.mult
-        }
+function SMODS.Jokers.j_f_typography.calculate(self, context)
+           if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 5) and self ~= context.other_joker then
+                local CheckForFaces = true
+                for k, v in ipairs(context.full_hand) do
+                    CheckForFaces = CheckForFaces and not v:is_face()
+                end
+                if not CheckForFaces then
+                    return nil
+                end
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        context.other_joker:juice_up(0.5, 0.5)
+                        return true
+                    end
+                })) 
+                return {
+                    message = localize{type='variable',key='a_mult',vars={self.ability.extra.mult}},
+                    mult_mod = self.ability.extra.mult
+                }
     end
 end
 
@@ -1612,19 +1612,19 @@ function SMODS.Jokers.j_f_party_animal.loc_def(card)
     return { card.ability.extra.chips }
 end
 
-function SMODS.Jokers.j_f_party_animal.calculate(card, context)
-    if context.joker_main and context.cardarea == G.jokers then
-        if (context.scoring_name == "High Card" or context.scoring_name == "Pair") then
-            card.ability.extra.chips = card.ability.extra.chips + 16
-            G.E_MANAGER:add_event(Event({
-                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true end
-            }))
-        end
-        return {
-            message = localize{type='variable',key='a_chips',vars={card.ability.extra.chips}},
-            chip_mod = card.ability.extra.chips,
-            colour = G.C.CHIPS
-        }
+function SMODS.Jokers.j_f_party_animal.calculate(self, context)
+            if context.joker_main and context.cardarea == G.jokers then
+                if (context.scoring_name == "High Card" or context.scoring_name == "Pair") then
+                    self.ability.extra.chips = self.ability.extra.chips + 16
+                    G.E_MANAGER:add_event(Event({
+                        func = function() card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}); return true
+                        end}))
+                end
+                return {
+                    message = localize{type='variable',key='a_chips',vars={self.ability.extra.chips}},
+                    chip_mod = self.ability.extra.chips,
+                    colour = G.C.CHIPS
+                }
     end
 end
 
@@ -1649,13 +1649,13 @@ function SMODS.Jokers.j_f_fishclown.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_f_fishclown.calculate(card, context)
-    if context.individual and context.cardarea == G.play and context.other_card.ability.set == 'Enhanced' then
-        return {
-            message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.x_mult } },
-            Xmult_mod = card.ability.extra.x_mult,
-            card = card
-        }
+function SMODS.Jokers.j_f_fishclown.calculate(self, context)
+            if context.individual and context.cardarea == G.play and context.other_card.ability.set == 'Enhanced' then
+                return {
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { self.ability.extra.x_mult } },
+                    Xmult_mod = self.ability.extra.x_mult,
+                    card = self
+                }
     end
 end
 
@@ -1683,12 +1683,12 @@ function SMODS.Jokers.j_f_original_character.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_f_original_character.calculate(card, context)
-    if context.joker_main and context.cardarea == G.jokers and card.ability.extra.mult >= 0 then
-        return {
-            message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra } },
-            mult_mod = card.ability.extra.mult,
-        }
+function SMODS.Jokers.j_f_original_character.calculate(self, context)
+            if context.joker_main and context.cardarea == G.jokers and self.ability.extra.mult >= 0 then
+                return {
+                    message = localize { type = 'variable', key = 'a_mult', vars = { self.ability.extra.mult } },
+                    mult_mod = self.ability.extra.mult,
+                }
     end
 end
 
