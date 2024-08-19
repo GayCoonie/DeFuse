@@ -907,7 +907,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local sweet_theatre_combo = SMODS.Joker:new("Sweet Theatre Combo", "sweet_theatre_combo", {extra = {mult = 30, chips = 150,count = 5
-    	}}, { x = 0, y = 0 }, sweet_theatre_combo_def, 2, 12, true, true, true, false)
+    	}}, { x = 0, y = 0 }, sweet_theatre_combo_def, 2, 8, true, true, true, false)
     	SMODS.Sprite:new("j_sweet_theatre_combo", mod_obj.path, "j_sweet_theatre_combo.png", 71, 95, "asset_atli"):register();
     	sweet_theatre_combo:register()
     
@@ -967,7 +967,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local bribery_clown = SMODS.Joker:new("Bribery Clown", "bribery_clown", {extra = {mult = 8, mult_add = 4
-    	}}, { x = 0, y = 0 }, bribery_clown_def, 2, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, bribery_clown_def, 2, 6, true, true, true, true)
     	SMODS.Sprite:new("j_bribery_clown", mod_obj.path, "j_bribery_clown.png", 71, 95, "asset_atli"):register();
     	bribery_clown:register()
     
@@ -1027,7 +1027,7 @@ function SMODS.INIT.DeFused()
     	}
     
     	local moorstone = SMODS.Joker:new("Moorstone", "moorstone", {extra = {chips_add = 40, chips = 0, count = 2
-    	}}, { x = 0, y = 0 }, moorstone_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, moorstone_def, 3, 8, true, true, true, true)
     	SMODS.Sprite:new("j_moorstone", mod_obj.path, "j_moorstone.png", 71, 95, "asset_atli"):register();
     	moorstone:register()
     
@@ -1093,7 +1093,7 @@ function SMODS.INIT.DeFused()
     	}
     
     	local oscar_best_actor = SMODS.Joker:new("Oscar Best Actor", "oscar_best_actor", {extra = {count = 1
-    	}}, { x = 0, y = 0 }, oscar_best_actor_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, oscar_best_actor_def, 3, 10, true, true, true, true)
     	SMODS.Sprite:new("j_oscar_best_actor", mod_obj.path, "j_oscar_best_actor.png", 71, 95, "asset_atli"):register();
     	oscar_best_actor:register()
     
@@ -1162,7 +1162,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local fight_a_bull = SMODS.Joker:new("Fight A Bull", "fight_a_bull", {extra = {dollars = 3, mult = 0, chips = 0
-    	}}, { x = 0, y = 0 }, fight_a_bull_def, 2, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, fight_a_bull_def, 2, 8, true, true, true, true)
     	SMODS.Sprite:new("j_fight_a_bull", mod_obj.path, "j_fight_a_bull.png", 71, 95, "asset_atli"):register();
     	fight_a_bull:register()
     
@@ -1201,7 +1201,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local melancholy_phantom = SMODS.Joker:new("Melancholy Phantom", "melancholy_phantom", {extra = {x_mult = 2, chips = 50
-    	}}, { x = 0, y = 0 }, melancholy_phantom_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, melancholy_phantom_def, 3, 10, true, true, true, true)
     	SMODS.Sprite:new("j_melancholy_phantom", mod_obj.path, "j_melancholy_phantom.png", 71, 95, "asset_atli"):register();
     	melancholy_phantom:register()
     
@@ -1242,7 +1242,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local solar_flare_joker = SMODS.Joker:new("Solar Flare Joker", "solar_flare_joker", {extra = {odds = 2
-    	}}, { x = 0, y = 0 }, solar_flare_joker_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, solar_flare_joker_def, 3, 10, true, true, true, true)
     	SMODS.Sprite:new("j_solar_flare_joker", mod_obj.path, "j_solar_flare_joker.png", 71, 95, "asset_atli"):register();
     	solar_flare_joker:register()
     
@@ -1287,7 +1287,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local blue_java = SMODS.Joker:new("Blue Java", "blue_java", {extra = {Xmult_mod = 0.5, Xmult = 7, odds = 6
-    	}}, { x = 0, y = 0 }, blue_java_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, blue_java_def, 3, 10, true, true, true, true)
     	SMODS.Sprite:new("j_blue_java", mod_obj.path, "j_blue_java.png", 71, 95, "asset_atli"):register();
     	blue_java:register()
     
@@ -1352,7 +1352,7 @@ function SMODS.INIT.DeFused()
     	}
     	
     	local serial_killer = SMODS.Joker:new("Serial Killer", "serial_killer", {extra = {Xmult_per = 0.25, Xmult = 2
-    	}}, { x = 0, y = 0 }, serial_killer_def, 3, 12, true, true, true, true)
+    	}}, { x = 0, y = 0 }, serial_killer_def, 3, 10, true, true, true, true)
     	SMODS.Sprite:new("j_serial_killer", mod_obj.path, "j_serial_killer.png", 71, 95, "asset_atli"):register();
     	serial_killer:register()
     
