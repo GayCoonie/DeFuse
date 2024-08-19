@@ -34,8 +34,6 @@ function Card:update(dt)
 
   if G.STAGE == G.STAGES.RUN then
 
-
-
 	if self.ability.name == "Flip-Flop" then
 		if self.ability.extra.side == "mult" then
 			if (self.config.center.atlas ~= "j_flip_flop" or G.localization.descriptions["Joker"]["j_flip_flop"] ~= G.localization.descriptions["Joker"]["j_flip_flop_mult"]) then
@@ -49,13 +47,15 @@ function Card:update(dt)
 				self.config.center.atlas = "j_flop_flip"
 				self:set_sprites(self.config.center)
 
+            end
+   end
+end
+
+
         if self.config.center.key == "j_f_original_character" then
             self.ability.extra.mult = (G.jokers.config.card_limit - #G.jokers.cards) * 12
             for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra = self.ability.extra + 6 end
-            end
-        end
-			end
 		end
 	end
 end
