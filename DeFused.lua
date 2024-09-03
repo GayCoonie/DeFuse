@@ -1362,31 +1362,31 @@ function SMODS.INIT.DeFused()
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_serial_killer.calculate(card, context)
+    	function SMODS.Jokers.j_serial_killer.calculate(self, context)
             if context.setting_blind and not self.getting_sliced and not context.blueprint then
                 local my_pos = nil
                 for i = 1, #G.jokers.cards do
-                    if G.jokers.cards[i] == card then my_pos = i; break end
+                    if G.jokers.cards[i] == self then my_pos = i; break end
                 end
-                if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
+                if my_pos and G.jokers.cards[my_pos+1] and not self.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
                     local sliced_card = G.jokers.cards[my_pos+1]
                     sliced_card.getting_sliced = true
                     G.GAME.joker_buffer = G.GAME.joker_buffer - 1
                     G.E_MANAGER:add_event(Event({func = function()
                         G.GAME.joker_buffer = 0
-                        card.ability.extra.Xmult = card.ability.extra.Xmult + sliced_card.sell_cost*card.ability.extra.Xmult_per
+                        self.ability.extra.Xmult = self.ability.extra.Xmult + sliced_card.sell_cost*self.ability.extra.Xmult_per
                         self:juice_up(0.8, 0.8)
                         sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
                         play_sound('slice1', 0.96+math.random()*0.08)
                     return true end }))
-                    card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult+card.ability.extra.Xmult_per*sliced_card.sell_cost}}, colour = G.C.RED, no_juice = true})
+                    card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_xmult', vars = {self.ability.extra.Xmult+self.ability.extra.Xmult_per*sliced_card.sell_cost}}, colour = G.C.RED, no_juice = true})
                 end
             end
     		
     		if context.cardarea == G.jokers and not context.after and not context.before then
                 return {
-                    message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult}},
-                    Xmult_mod = card.ability.extra.Xmult,
+                    message = localize{type='variable',key='a_xmult',vars={self.ability.extra.Xmult}},
+                    Xmult_mod = self.ability.extra.Xmult,
                 }
     		end
 	end
