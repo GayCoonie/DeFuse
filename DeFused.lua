@@ -17,7 +17,7 @@ G.localization.misc.dictionary["b_fuse"] = "FUSE"
 G.localization.misc.v_dictionary.sweet_theatre_combo = {"+#1#mult +#2#chips"}
 G.localization.misc.v_dictionary.melancholy_phantom = {"X#1#mult +#2#chips"}
 
-FusionJokers = {}
+DeFused = {}
 
 local function has_joker(val)
 	for k, v in pairs(G.jokers.cards) do
