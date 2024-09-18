@@ -36,15 +36,15 @@ function Card:update(dt)
 
 	if self.ability.name == "Flip-Flop" then
 		if self.ability.extra.side == "mult" then
-			if (self.config.center.atlas ~= "j_flip_flop" or G.localization.descriptions["Joker"]["j_flip_flop"] ~= G.localization.descriptions["Joker"]["j_flip_flop_mult"]) then
-				G.localization.descriptions["Joker"]["j_flip_flop"] = G.localization.descriptions["Joker"]["j_flip_flop_mult"]
-				self.config.center.atlas = "j_flip_flop"
+			if (self.config.center.atlas ~= "j_d_flip_flop" or G.localization.descriptions["Joker"]["j_d_flip_flop"] ~= G.localization.descriptions["Joker"]["j_d_flip_flop_mult"]) then
+				G.localization.descriptions["Joker"]["j_d_flip_flop"] = G.localization.descriptions["Joker"]["j_d_flip_flop_mult"]
+				self.config.center.atlas = "j_d_flip_flop"
 				self:set_sprites(self.config.center)
 			end
 		else
-			if (self.config.center.atlas ~= "j_flop_flip" or G.localization.descriptions["Joker"]["j_flip_flop"] ~= G.localization.descriptions["Joker"]["j_flip_flop_chips"]) then
-				G.localization.descriptions["Joker"]["j_flip_flop"] = G.localization.descriptions["Joker"]["j_flip_flop_chips"]
-				self.config.center.atlas = "j_flop_flip"
+			if (self.config.center.atlas ~= "j_d_flop_flip" or G.localization.descriptions["Joker"]["j_d_flip_flop"] ~= G.localization.descriptions["Joker"]["j_d_flip_flop_chips"]) then
+				G.localization.descriptions["Joker"]["j_d_flip_flop"] = G.localization.descriptions["Joker"]["j_d_flip_flop_chips"]
+				self.config.center.atlas = "j_d_flop_flip"
 				self:set_sprites(self.config.center)
 
             end
@@ -52,7 +52,7 @@ function Card:update(dt)
 end
 
 
-        if self.config.center.key == "j_f_original_character" then
+        if self.config.center.key == "j_d_f_original_character" then
             self.ability.extra.mult = (G.jokers.config.card_limit - #G.jokers.cards) * 12
             for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra = self.ability.extra + 6 end
@@ -215,17 +215,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local diamond_bard = SMODS.Joker:new("Diamond Bard", "diamond_bard", {extra = {
+	local d_diamond_bard = SMODS.Joker:new("Diamond Bard", "d_diamond_bard", {extra = {
 		money_threshold = 20, mult = 4, money = 1
 	}}, { x = 0, y = 0 }, diamond_bard_def, 3, 12, true, true, true, true)
-	SMODS.Sprite:new("j_diamond_bard", mod_obj.path, "j_diamond_bard.png", 71, 95, "asset_atli"):register();
-	diamond_bard:register()
+	SMODS.Sprite:new("j_d_diamond_bard", mod_obj.path, "j_diamond_bard.png", 71, 95, "asset_atli"):register();
+	d_diamond_bard:register()
 
-	function SMODS.Jokers.j_diamond_bard.loc_def(card)
+	function SMODS.Jokers.j_d_diamond_bard.loc_def(card)
 		return {card.ability.extra.money, card.ability.extra.mult, card.ability.extra.money_threshold}
 	end
 
-	function SMODS.Jokers.j_diamond_bard.calculate(card, context)
+	function SMODS.Jokers.j_d_diamond_bard.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		context.other_card:is_suit('Diamonds') then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
@@ -249,17 +249,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
   
-	local heart_paladin = SMODS.Joker:new("Heart Paladin", "heart_paladin", {extra = {
+	local d_heart_paladin = SMODS.Joker:new("Heart Paladin", "d_heart_paladin", {extra = {
 		odds = 3, Xmult = 1.5
 	}}, { x = 0, y = 0 }, heart_paladin_def, 3, 12, true, true, true, true)
-	SMODS.Sprite:new("j_heart_paladin", mod_obj.path, "j_heart_paladin.png", 71, 95, "asset_atli"):register();
-	heart_paladin:register()
+	SMODS.Sprite:new("j_d_heart_paladin", mod_obj.path, "j_heart_paladin.png", 71, 95, "asset_atli"):register();
+	d_heart_paladin:register()
 
-	function SMODS.Jokers.j_heart_paladin.loc_def(card)
+	function SMODS.Jokers.j_d_heart_paladin.loc_def(card)
 		return {card.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds}
 	end
 
-	function SMODS.Jokers.j_heart_paladin.calculate(card, context)
+	function SMODS.Jokers.j_d_heart_paladin.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		context.other_card:is_suit('Hearts') then
 			return {
@@ -291,17 +291,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local spade_archer = SMODS.Joker:new("Spade Archer", "spade_archer", {extra = {
+	local d_spade_archer = SMODS.Joker:new("Spade Archer", "d_spade_archer", {extra = {
 		chips = 50, chip_mod = 10
 	}}, { x = 0, y = 0 }, spade_archer_def, 3, 12, true, true, true, true)
-	SMODS.Sprite:new("j_spade_archer", mod_obj.path, "j_spade_archer.png", 71, 95, "asset_atli"):register();
-	spade_archer:register()
+	SMODS.Sprite:new("j_d_spade_archer", mod_obj.path, "j_spade_archer.png", 71, 95, "asset_atli"):register();
+	d_spade_archer:register()
 
-	function SMODS.Jokers.j_spade_archer.loc_def(card)
+	function SMODS.Jokers.j_d_spade_archer.loc_def(card)
 		return {card.ability.extra.chips, card.ability.extra.chip_mod}
 	end
 
-	function SMODS.Jokers.j_spade_archer.calculate(card, context)
+	function SMODS.Jokers.j_d_spade_archer.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		context.other_card:is_suit('Spades') then
 			return {
@@ -338,17 +338,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local club_wizard = SMODS.Joker:new("Club Wizard", "club_wizard", {extra = {
+	local d_club_wizard = SMODS.Joker:new("Club Wizard", "d_club_wizard", {extra = {
 		mult = 24
 	}}, { x = 0, y = 0 }, club_wizard_def, 3, 12, true, true, true, true)
-	SMODS.Sprite:new("j_club_wizard", mod_obj.path, "j_club_wizard.png", 71, 95, "asset_atli"):register();
-	club_wizard:register()
+	SMODS.Sprite:new("j_d_club_wizard", mod_obj.path, "j_club_wizard.png", 71, 95, "asset_atli"):register();
+	d_club_wizard:register()
 
-	function SMODS.Jokers.j_club_wizard.loc_def(card)
+	function SMODS.Jokers.j_d_club_wizard.loc_def(card)
 		return {card.ability.extra.mult}
 	end
 
-	function SMODS.Jokers.j_club_wizard.calculate(card, context)
+	function SMODS.Jokers.j_d_club_wizard.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		context.other_card:is_suit('Clubs') then
 			return {
@@ -370,17 +370,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
 	
-	local big_bang = SMODS.Joker:new("Big Bang", "big_bang", {extra = {
+	local d_big_bang = SMODS.Joker:new("Big Bang", "d_big_bang", {extra = {
 		Xmult = 0.1
 	}}, { x = 0, y = 0 }, big_bang_def, 3, 11, true, true, true, true)
-	SMODS.Sprite:new("j_big_bang", mod_obj.path, "j_big_bang.png", 71, 95, "asset_atli"):register();
-	big_bang:register()
+	SMODS.Sprite:new("j_d_big_bang", mod_obj.path, "j_big_bang.png", 71, 95, "asset_atli"):register();
+	d_big_bang:register()
 
-	function SMODS.Jokers.j_big_bang.loc_def(card)
+	function SMODS.Jokers.j_d_big_bang.loc_def(card)
 		return {card.ability.extra.Xmult}
 	end
 
-	function SMODS.Jokers.j_big_bang.calculate(card, context)
+	function SMODS.Jokers.j_d_big_bang.calculate(card, context)
 		if context.cardarea == G.jokers and not context.after and not context.before and context.scoring_name then
 			local mult_val = 1 + card.ability.extra.Xmult * (G.GAME.hands[context.scoring_name].level + G.GAME.hands[context.scoring_name].played)
 			return {
@@ -401,17 +401,17 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local dynamic_duo = SMODS.Joker:new("Dynamic Duo", "dynamic_duo", {extra = {
+	local d_dynamic_duo = SMODS.Joker:new("Dynamic Duo", "d_dynamic_duo", {extra = {
 		mult = 4, chips = 30
 	}}, { x = 0, y = 0 }, dynamic_duo_def, 2, 8, true, true, true, true)
-	SMODS.Sprite:new("j_dynamic_duo", mod_obj.path, "j_dynamic_duo.png", 71, 95, "asset_atli"):register();
-	dynamic_duo:register()
+	SMODS.Sprite:new("j_d_dynamic_duo", mod_obj.path, "j_dynamic_duo.png", 71, 95, "asset_atli"):register();
+	d_dynamic_duo:register()
 
-	function SMODS.Jokers.j_dynamic_duo.loc_def(card)
+	function SMODS.Jokers.j_d_dynamic_duo.loc_def(card)
 		return {card.ability.extra.mult, card.ability.extra.chips}
 	end
 
-	function SMODS.Jokers.j_dynamic_duo.calculate(card, context)
+	function SMODS.Jokers.j_d_dynamic_duo.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		not context.other_card:is_face() then
 			return {
@@ -432,19 +432,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local collectible_chaos_card = SMODS.Joker:new("Collectible Chaos Card", "collectible_chaos_card", {extra = {
+	local d_collectible_chaos_card = SMODS.Joker:new("Collectible Chaos Card", "d_collectible_chaos_card", {extra = {
 		per_reroll = 2, free = 1
 	}, mult = 0}, { x = 0, y = 0 }, collectible_chaos_card_def, 2, 9, true, true, true, true)
-	SMODS.Sprite:new("j_collectible_chaos_card", mod_obj.path, "j_collectible_chaos_card.png", 71, 95, "asset_atli"):register();
-	collectible_chaos_card:register()
+	SMODS.Sprite:new("j_d_collectible_chaos_card", mod_obj.path, "j_collectible_chaos_card.png", 71, 95, "asset_atli"):register();
+	d_collectible_chaos_card:register()
 
-	function SMODS.Jokers.j_collectible_chaos_card.loc_def(card)
+	function SMODS.Jokers.j_d_collectible_chaos_card.loc_def(card)
 		return {card.ability.extra.per_reroll, card.ability.extra.free, card.ability.mult,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_collectible_chaos_card.calculate(card, context)
+	function SMODS.Jokers.j_d_collectible_chaos_card.calculate(card, context)
 		if context.reroll_shop and not context.blueprint then
 			card.ability.mult = card.ability.mult + card.ability.extra.per_reroll
             G.E_MANAGER:add_event(Event({
@@ -482,18 +482,18 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local flip_flop = SMODS.Joker:new("Flip-Flop", "flip_flop", {extra = {
+	local d_flip_flop = SMODS.Joker:new("Flip-Flop", "d_flip_flop", {extra = {
 		hands = 2, discards = 2, mult = 8, chips = 50, side = "mult"
 	}}, { x = 0, y = 0 }, flip_flop_hand_def, 2, 9, true, true, false, true)
-	SMODS.Sprite:new("j_flip_flop", mod_obj.path, "j_flip_flop.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("j_flop_flip", mod_obj.path, "j_flop_flip.png", 71, 95, "asset_atli"):register();
-	flip_flop:register()
+	SMODS.Sprite:new("j_d_flip_flop", mod_obj.path, "j_flip_flop.png", 71, 95, "asset_atli"):register();
+	SMODS.Sprite:new("j_d_flop_flip", mod_obj.path, "j_flop_flip.png", 71, 95, "asset_atli"):register();
+	d_flip_flop:register()
 
-	G.localization.descriptions["Joker"]["j_flip_flop_chips"] = flip_flop_discard_def
-	G.localization.descriptions["Joker"]["j_flip_flop_mult"] = flip_flop_hand_def
+	G.localization.descriptions["Joker"]["j_d_flip_flop_chips"] = flip_flop_discard_def
+	G.localization.descriptions["Joker"]["j_d_flip_flop_mult"] = flip_flop_hand_def
 	
 
-	function SMODS.Jokers.j_flip_flop.loc_def(card)
+	function SMODS.Jokers.j_d_flip_flop.loc_def(card)
 		if card.ability.extra.side == "mult" then
 			return {card.ability.extra.hands, card.ability.extra.mult,
 			localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
@@ -505,15 +505,15 @@ function SMODS.INIT.DeFused()
 		end
 	end
 
-	function SMODS.Jokers.j_flip_flop.calculate(card, context)
+	function SMODS.Jokers.j_d_flip_flop.calculate(card, context)
 		if context.end_of_round and not context.blueprint and not context.repetition and not context.individual then
 			if card.ability.extra.side == "mult" then
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
 					func = function()
 						card.ability.extra.side = "chips"
-						G.localization.descriptions["Joker"]["j_flip_flop"] = G.localization.descriptions["Joker"]["j_flip_flop_chips"]
+						G.localization.descriptions["Joker"]["j_d_flip_flop"] = G.localization.descriptions["Joker"]["j_d_flip_flop_chips"]
 						card:juice_up(1, 1)
-						card.config.center.atlas = "j_flop_flip"
+						card.config.center.atlas = "j_d_flop_flip"
 						card:set_sprites(card.config.center)
 
 				return true; end})) 
@@ -530,9 +530,9 @@ function SMODS.INIT.DeFused()
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
 					func = function()
 						card.ability.extra.side = "mult"
-						G.localization.descriptions["Joker"]["j_flip_flop"] = G.localization.descriptions["Joker"]["j_flip_flop_mult"]
+						G.localization.descriptions["Joker"]["j_d_flip_flop"] = G.localization.descriptions["Joker"]["j_d_flip_flop_mult"]
 						card:juice_up(1, 1)
-						card.config.center.atlas = "j_flip_flop"
+						card.config.center.atlas = "j_d_flip_flop"
 						card:set_sprites(card.config.center)
 
 				return true; end})) 
@@ -579,19 +579,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local royal_decree = SMODS.Joker:new("Royal Decree", "royal_decree", {extra = {
+	local d_royal_decree = SMODS.Joker:new("Royal Decree", "d_royal_decree", {extra = {
 		dollars = 2
 	}, mult = 0}, { x = 0, y = 0 }, royal_decree_def, 2, 10, true, true, true, true)
-	SMODS.Sprite:new("j_royal_decree", mod_obj.path, "j_royal_decree.png", 71, 95, "asset_atli"):register();
-	royal_decree:register()
+	SMODS.Sprite:new("j_d_royal_decree", mod_obj.path, "j_royal_decree.png", 71, 95, "asset_atli"):register();
+	d_royal_decree:register()
 
-	function SMODS.Jokers.j_royal_decree.loc_def(card)
+	function SMODS.Jokers.j_d_royal_decree.loc_def(card)
 		return {card.ability.extra.dollars,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_royal_decree.calculate(card, context)
+	function SMODS.Jokers.j_d_royal_decree.calculate(card, context)
 		if context.end_of_round and context.individual then
 			if context.cardarea == G.hand and context.other_card:is_face() then
 				return {
@@ -625,20 +625,20 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local dementia_joker = SMODS.Joker:new("Dementia Joker", "dementia_joker", {extra = {
+	local d_dementia_joker = SMODS.Joker:new("Dementia Joker", "d_dementia_joker", {extra = {
 		mult = 3, odds = 3
 	}, mult = 0}, { x = 0, y = 0 }, dementia_joker_def, 3, 8, true, true, true, true)
-	SMODS.Sprite:new("j_dementia_joker", mod_obj.path, "j_dementia_joker.png", 71, 95, "asset_atli"):register();
-	dementia_joker:register()
+	SMODS.Sprite:new("j_d_dementia_joker", mod_obj.path, "j_dementia_joker.png", 71, 95, "asset_atli"):register();
+	d_dementia_joker:register()
 
-	function SMODS.Jokers.j_dementia_joker.loc_def(card)
+	function SMODS.Jokers.j_d_dementia_joker.loc_def(card)
 		return {card.ability.extra.mult, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, 
 		(G.jokers and G.jokers.cards and #G.jokers.cards or 0)*card.ability.extra.mult,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_dementia_joker.calculate(card, context)
+	function SMODS.Jokers.j_d_dementia_joker.calculate(card, context)
 		if context.end_of_round and not context.blueprint and not context.repetition and not context.individual then
 			if pseudorandom('dementia_joker') < G.GAME.probabilities.normal/card.ability.extra.odds 
 			and not (card.edition and card.edition.negative) then
@@ -677,19 +677,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local golden_egg = SMODS.Joker:new("Golden Egg", "golden_egg", {extra = {
+	local d_golden_egg = SMODS.Joker:new("Golden Egg", "d_golden_egg", {extra = {
 		dollars = 4
 	}, mult = 0}, { x = 0, y = 0 }, golden_egg_def, 2, 10, true, true, false, true)
-	SMODS.Sprite:new("j_golden_egg", mod_obj.path, "j_golden_egg.png", 71, 95, "asset_atli"):register();
-	golden_egg:register()
+	SMODS.Sprite:new("j_d_golden_egg", mod_obj.path, "j_golden_egg.png", 71, 95, "asset_atli"):register();
+	d_golden_egg:register()
 
-	function SMODS.Jokers.j_golden_egg.loc_def(card)
+	function SMODS.Jokers.j_d_golden_egg.loc_def(card)
 		return {card.ability.extra.dollars,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_golden_egg.calculate(card, context)
+	function SMODS.Jokers.j_d_golden_egg.calculate(card, context)
 		if context.end_of_round and not context.blueprint and not context.repetition and not context.individual then
 			card.ability.extra_value = card.ability.extra_value + card.ability.extra.dollars
 			card:set_cost()
@@ -713,19 +713,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local flag_bearer = SMODS.Joker:new("Flag Bearer", "flag_bearer", {extra = {
+	local d_flag_bearer = SMODS.Joker:new("Flag Bearer", "d_flag_bearer", {extra = {
 		hand_add = 1, discard_sub = 1
 	}, mult = 0}, { x = 0, y = 0 }, flag_bearer_def, 2, 9, true, true, false, true)
-	SMODS.Sprite:new("j_flag_bearer", mod_obj.path, "j_flag_bearer.png", 71, 95, "asset_atli"):register();
-	flag_bearer:register()
+	SMODS.Sprite:new("j_d_flag_bearer", mod_obj.path, "j_flag_bearer.png", 71, 95, "asset_atli"):register();
+	d_flag_bearer:register()
 
-	function SMODS.Jokers.j_flag_bearer.loc_def(card)
+	function SMODS.Jokers.j_d_flag_bearer.loc_def(card)
 		return {card.ability.extra.hand_add, card.ability.extra.discard_sub, card.ability.mult * (G.GAME.current_round.discards_left or 0),
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_flag_bearer.calculate(card, context)
+	function SMODS.Jokers.j_d_flag_bearer.calculate(card, context)
 		if context.discard and not context.blueprint and context.other_card == context.full_hand[#context.full_hand] then
 			local prev_mult = card.ability.mult
 			card.ability.mult = math.max(0, card.ability.mult - card.ability.extra.discard_sub)
@@ -768,19 +768,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local uncanny_face = SMODS.Joker:new("Uncanny Face", "uncanny_face", {extra = {
+	local d_uncanny_face = SMODS.Joker:new("Uncanny Face", "d_uncanny_face", {extra = {
 		chips = 15, mult = 2
 	}}, { x = 0, y = 0 }, uncanny_face_def, 2, 8, true, true, true, true)
-	SMODS.Sprite:new("j_uncanny_face", mod_obj.path, "j_uncanny_face.png", 71, 95, "asset_atli"):register();
-	uncanny_face:register()
+	SMODS.Sprite:new("j_d_uncanny_face", mod_obj.path, "j_uncanny_face.png", 71, 95, "asset_atli"):register();
+	d_uncanny_face:register()
 
-	function SMODS.Jokers.j_uncanny_face.loc_def(card)
+	function SMODS.Jokers.j_d_uncanny_face.loc_def(card)
 		return {card.ability.extra.chips, card.ability.extra.mult,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 	
-	function SMODS.Jokers.j_uncanny_face.calculate(card, context)
+	function SMODS.Jokers.j_d_uncanny_face.calculate(card, context)
 		if context.individual and context.cardarea == G.play and
 		context.other_card:is_face() then
 			local faces = 0
@@ -807,19 +807,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local commercial_driver = SMODS.Joker:new("Commercial Driver", "commercial_driver", {extra = {
+	local d_commercial_driver = SMODS.Joker:new("Commercial Driver", "d_commercial_driver", {extra = {
 		bonus = 0.25, total = 1
 	}}, { x = 0, y = 0 }, commercial_driver_def, 2, 8, true, true, true, true)
-	SMODS.Sprite:new("j_commercial_driver", mod_obj.path, "j_commercial_driver.png", 71, 95, "asset_atli"):register();
-	commercial_driver:register()
+	SMODS.Sprite:new("j_d_commercial_driver", mod_obj.path, "j_commercial_driver.png", 71, 95, "asset_atli"):register();
+	d_commercial_driver:register()
 
-	function SMODS.Jokers.j_commercial_driver.loc_def(card)
+	function SMODS.Jokers.j_d_commercial_driver.loc_def(card)
 		return {card.ability.extra.bonus, card.ability.extra.total,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_commercial_driver.calculate(card, context)
+	function SMODS.Jokers.j_d_commercial_driver.calculate(card, context)
 		if context.before and context.cardarea == G.jokers then
 			local enhanced = false
 			for i = 1, #context.scoring_hand do
@@ -858,19 +858,19 @@ function SMODS.INIT.DeFused()
 		}
 	}
 
-	local camping_trip = SMODS.Joker:new("Camping Trip", "camping_trip", {extra = {
+	local d_camping_trip = SMODS.Joker:new("Camping Trip", "d_camping_trip", {extra = {
 		bonus_base = 5, bonus_final = 10
 	}}, { x = 0, y = 0 }, camping_trip_def, 2, 10, true, true, true, true)
-	SMODS.Sprite:new("j_camping_trip", mod_obj.path, "j_camping_trip.png", 71, 95, "asset_atli"):register();
-	camping_trip:register()
+	SMODS.Sprite:new("j_d_camping_trip", mod_obj.path, "j_camping_trip.png", 71, 95, "asset_atli"):register();
+	d_camping_trip:register()
 
-	function SMODS.Jokers.j_camping_trip.loc_def(card)
+	function SMODS.Jokers.j_d_camping_trip.loc_def(card)
 		return {card.ability.extra.bonus_base, card.ability.extra.bonus_final,
 		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
 		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
 	end
 
-	function SMODS.Jokers.j_camping_trip.calculate(card, context)
+	function SMODS.Jokers.j_d_camping_trip.calculate(card, context)
 		if context.individual and context.cardarea == G.play then
 			context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
 			if G.GAME.current_round.hands_left == 0 then
@@ -906,18 +906,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local sweet_theatre_combo = SMODS.Joker:new("Sweet Theatre Combo", "sweet_theatre_combo", {extra = {mult = 30, chips = 150,count = 5
+    	local d_sweet_theatre_combo = SMODS.Joker:new("Sweet Theatre Combo", "d_sweet_theatre_combo", {extra = {mult = 30, chips = 150,count = 5
     	}}, { x = 0, y = 0 }, sweet_theatre_combo_def, 2, 8, true, true, true, false)
-    	SMODS.Sprite:new("j_sweet_theatre_combo", mod_obj.path, "j_sweet_theatre_combo.png", 71, 95, "asset_atli"):register();
-    	sweet_theatre_combo:register()
+    	SMODS.Sprite:new("j_d_sweet_theatre_combo", mod_obj.path, "j_sweet_theatre_combo.png", 71, 95, "asset_atli"):register();
+    	d_sweet_theatre_combo:register()
     
-    	function SMODS.Jokers.j_sweet_theatre_combo.loc_def(card)
+    	function SMODS.Jokers.j_d_sweet_theatre_combo.loc_def(card)
     		return {card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.count, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_sweet_theatre_combo.calculate(card, context)
+    	function SMODS.Jokers.j_d_sweet_theatre_combo.calculate(card, context)
     		if context.end_of_round and not (context.individual or context.repetition or context.blueprint) then
     		    card.ability.extra.count=card.ability.extra.count-1
                 if card.ability.extra.count<=0 then
@@ -966,18 +966,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local bribery_clown = SMODS.Joker:new("Bribery Clown", "bribery_clown", {extra = {mult = 8, mult_add = 4
+    	local d_bribery_clown = SMODS.Joker:new("Bribery Clown", "d_bribery_clown", {extra = {mult = 8, mult_add = 4
     	}}, { x = 0, y = 0 }, bribery_clown_def, 2, 6, true, true, true, true)
-    	SMODS.Sprite:new("j_bribery_clown", mod_obj.path, "j_bribery_clown.png", 71, 95, "asset_atli"):register();
-    	bribery_clown:register()
+    	SMODS.Sprite:new("j_d_bribery_clown", mod_obj.path, "j_bribery_clown.png", 71, 95, "asset_atli"):register();
+    	d_bribery_clown:register()
     
-    	function SMODS.Jokers.j_bribery_clown.loc_def(card)
+    	function SMODS.Jokers.j_d_bribery_clown.loc_def(card)
     		return {card.ability.extra.mult, card.ability.extra.mult_add, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_bribery_clown.calculate(card, context)
+    	function SMODS.Jokers.j_d_bribery_clown.calculate(card, context)
     	    if context.skipping_booster and not context.blueprint then
                 card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_add
                 G.E_MANAGER:add_event(Event({
@@ -1026,19 +1026,19 @@ function SMODS.INIT.DeFused()
     		}
     	}
     
-    	local moorstone = SMODS.Joker:new("Moorstone", "moorstone", {extra = {chips_add = 40, chips = 0, count = 2
+    	local d_moorstone = SMODS.Joker:new("Moorstone", "d_moorstone", {extra = {chips_add = 40, chips = 0, count = 2
     	}}, { x = 0, y = 0 }, moorstone_def, 3, 8, true, true, true, true)
-    	SMODS.Sprite:new("j_moorstone", mod_obj.path, "j_moorstone.png", 71, 95, "asset_atli"):register();
-    	moorstone:register()
+    	SMODS.Sprite:new("j_d_moorstone", mod_obj.path, "j_moorstone.png", 71, 95, "asset_atli"):register();
+    	d_moorstone:register()
     
-    	function SMODS.Jokers.j_moorstone.loc_def(card)
+    	function SMODS.Jokers.j_d_moorstone.loc_def(card)
     	    card.ability.extra.chips = card.ability.extra.chips_add*(card.ability.stone_tally or 0)
     		return {card.ability.extra.chips_add, card.ability.extra.chips, card.ability.extra.count, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_moorstone.calculate(card, context)
+    	function SMODS.Jokers.j_d_moorstone.calculate(card, context)
     	    if context.individual and context.cardarea == G.play and
     		context.other_card.ability.effect == 'Stone Card' and not (context.blueprint_card or card).getting_sliced then
     		    card.ability.extra.count = card.ability.extra.count - 1
@@ -1092,18 +1092,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     
-    	local oscar_best_actor = SMODS.Joker:new("Oscar Best Actor", "oscar_best_actor", {extra = {count = 1
+    	local d_oscar_best_actor = SMODS.Joker:new("Oscar Best Actor", "d_oscar_best_actor", {extra = {count = 1
     	}}, { x = 0, y = 0 }, oscar_best_actor_def, 3, 10, true, true, true, true)
-    	SMODS.Sprite:new("j_oscar_best_actor", mod_obj.path, "j_oscar_best_actor.png", 71, 95, "asset_atli"):register();
-    	oscar_best_actor:register()
+    	SMODS.Sprite:new("j_d_oscar_best_actor", mod_obj.path, "j_oscar_best_actor.png", 71, 95, "asset_atli"):register();
+    	d_oscar_best_actor:register()
     
-    	function SMODS.Jokers.j_oscar_best_actor.loc_def(card)
+    	function SMODS.Jokers.j_d_oscar_best_actor.loc_def(card)
     		return {card.ability.extra.count,
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_oscar_best_actor.calculate(card, context)
+    	function SMODS.Jokers.j_d_oscar_best_actor.calculate(card, context)
     		if context.repetition then
                 if context.cardarea == G.play then
                     if true or (context.other_card:is_face()) then
@@ -1137,13 +1137,13 @@ function SMODS.INIT.DeFused()
     		}
     	}
     
-    	local optimist = SMODS.Joker:new("Optimist", "optimist", {extra = {
+    	local d_optimist = SMODS.Joker:new("Optimist", "d_optimist", {extra = {
     		h_size = 2, h_plays = -1, d_size = 2
     	}}, { x = 0, y = 0 }, optimist_def, 2, 12, true, true, false, true)
-    	SMODS.Sprite:new("j_optimist", mod_obj.path, "j_optimist.png", 71, 95, "asset_atli"):register();
-    	optimist:register()
+    	SMODS.Sprite:new("j_d_optimist", mod_obj.path, "j_optimist.png", 71, 95, "asset_atli"):register();
+    	d_optimist:register()
     
-    	function SMODS.Jokers.j_optimist.loc_def(card)
+    	function SMODS.Jokers.j_d_optimist.loc_def(card)
     		return {card.ability.extra.h_size, card.ability.extra.h_plays, card.ability.extra.d_size, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
@@ -1161,12 +1161,12 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local fight_a_bull = SMODS.Joker:new("Fight A Bull", "fight_a_bull", {extra = {dollars = 3, mult = 0, chips = 0
+    	local d_fight_a_bull = SMODS.Joker:new("Fight A Bull", "d_fight_a_bull", {extra = {dollars = 3, mult = 0, chips = 0
     	}}, { x = 0, y = 0 }, fight_a_bull_def, 2, 8, true, true, true, true)
-    	SMODS.Sprite:new("j_fight_a_bull", mod_obj.path, "j_fight_a_bull.png", 71, 95, "asset_atli"):register();
-    	fight_a_bull:register()
+    	SMODS.Sprite:new("j_d_fight_a_bull", mod_obj.path, "j_fight_a_bull.png", 71, 95, "asset_atli"):register();
+    	d_fight_a_bull:register()
     
-    	function SMODS.Jokers.j_fight_a_bull.loc_def(card)
+    	function SMODS.Jokers.j_d_fight_a_bull.loc_def(card)
     	    card.ability.extra.mult = 2*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
             card.ability.extra.chips = 8*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
     		return {card.ability.extra.dollars, card.ability.extra.mult, card.ability.extra.chips, 
@@ -1174,13 +1174,13 @@ function SMODS.INIT.DeFused()
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_fight_a_bull.calculate(card, context)
+    	function SMODS.Jokers.j_d_fight_a_bull.calculate(card, context)
             if context.cardarea == G.jokers and not context.after and not context.before then
                 card.ability.extra.mult = 2*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
                 card.ability.extra.chips = 8*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
                 
                 return {
-    				message = localize{type='variable',key='sweet_theatre_combo',vars={card.ability.extra.mult,card.ability.extra.chips}},
+    				message = localize{type='variable',key='d_sweet_theatre_combo',vars={card.ability.extra.mult,card.ability.extra.chips}},
     				mult_mod = card.ability.extra.mult,
     				chip_mod = card.ability.extra.chips,
     			}
@@ -1200,21 +1200,21 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local melancholy_phantom = SMODS.Joker:new("Melancholy Phantom", "melancholy_phantom", {extra = {x_mult = 2, chips = 50
+    	local d_melancholy_phantom = SMODS.Joker:new("Melancholy Phantom", "d_melancholy_phantom", {extra = {x_mult = 2, chips = 50
     	}}, { x = 0, y = 0 }, melancholy_phantom_def, 3, 10, true, true, true, true)
-    	SMODS.Sprite:new("j_melancholy_phantom", mod_obj.path, "j_melancholy_phantom.png", 71, 95, "asset_atli"):register();
-    	melancholy_phantom:register()
+    	SMODS.Sprite:new("j_d_melancholy_phantom", mod_obj.path, "j_melancholy_phantom.png", 71, 95, "asset_atli"):register();
+    	d_melancholy_phantom:register()
     
-    	function SMODS.Jokers.j_melancholy_phantom.loc_def(card)
+    	function SMODS.Jokers.j_d_melancholy_phantom.loc_def(card)
     		return {card.ability.extra.x_mult, card.ability.extra.chips, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_melancholy_phantom.calculate(card, context)
+    	function SMODS.Jokers.j_d_melancholy_phantom.calculate(card, context)
             if context.cardarea == G.jokers and not context.after and not context.before then
                 return {
-    				message = localize{type='variable',key='melancholy_phantom',vars={card.ability.extra.x_mult,card.ability.extra.chips}},
+    				message = localize{type='variable',key='d_melancholy_phantom',vars={card.ability.extra.x_mult,card.ability.extra.chips}},
     				Xmult_mod = card.ability.extra.x_mult,
     				chip_mod = card.ability.extra.chips,
     			}
@@ -1224,7 +1224,7 @@ function SMODS.INIT.DeFused()
         		if (not context.blueprint) and context.cards and context.cards[1] then
                     card.ability.extra.x_mult = card.ability.extra.x_mult + #context.cards*0.1
                     card.ability.extra.chips = card.ability.extra.chips + #context.cards*8
-                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'melancholy_phantom', vars = {card.ability.extra.x_mult,card.ability.extra.chips}}})
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'd_melancholy_phantom', vars = {card.ability.extra.x_mult,card.ability.extra.chips}}})
                 end
             end
     	end
@@ -1241,18 +1241,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local solar_flare_joker = SMODS.Joker:new("Solar Flare Joker", "solar_flare_joker", {extra = {odds = 2
+    	local d_solar_flare_joker = SMODS.Joker:new("Solar Flare Joker", "d_solar_flare_joker", {extra = {odds = 2
     	}}, { x = 0, y = 0 }, solar_flare_joker_def, 3, 10, true, true, true, true)
-    	SMODS.Sprite:new("j_solar_flare_joker", mod_obj.path, "j_solar_flare_joker.png", 71, 95, "asset_atli"):register();
-    	solar_flare_joker:register()
+    	SMODS.Sprite:new("j_d_solar_flare_joker", mod_obj.path, "j_solar_flare_joker.png", 71, 95, "asset_atli"):register();
+    	d_solar_flare_joker:register()
     
-    	function SMODS.Jokers.j_solar_flare_joker.loc_def(card)
+    	function SMODS.Jokers.j_d_solar_flare_joker.loc_def(card)
     		return {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_solar_flare_joker.calculate(card, context)
+    	function SMODS.Jokers.j_d_solar_flare_joker.calculate(card, context)
             if context.pre_discard then
                 if pseudorandom('solar_radiation') < G.GAME.probabilities.normal/card.ability.extra.odds and not context.hook then
                 local text,disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
@@ -1286,18 +1286,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local blue_java = SMODS.Joker:new("Blue Java", "blue_java", {extra = {Xmult_mod = 0.5, Xmult = 7, odds = 6
+    	local d_blue_java = SMODS.Joker:new("Blue Java", "d_blue_java", {extra = {Xmult_mod = 0.5, Xmult = 7, odds = 6
     	}}, { x = 0, y = 0 }, blue_java_def, 3, 10, true, true, true, true)
-    	SMODS.Sprite:new("j_blue_java", mod_obj.path, "j_blue_java.png", 71, 95, "asset_atli"):register();
-    	blue_java:register()
+    	SMODS.Sprite:new("j_d_blue_java", mod_obj.path, "j_blue_java.png", 71, 95, "asset_atli"):register();
+    	d_blue_java:register()
     
-    	function SMODS.Jokers.j_blue_java.loc_def(card)
+    	function SMODS.Jokers.j_d_blue_java.loc_def(card)
     		return {card.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_blue_java.calculate(card, context)
+    	function SMODS.Jokers.j_d_blue_java.calculate(card, context)
             if context.after and not context.blueprint and not context.repetition and not context.individual then
                 if pseudorandom('hybrid_banana') < G.GAME.probabilities.normal/card.ability.extra.odds then
                     card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_mod
@@ -1351,18 +1351,18 @@ function SMODS.INIT.DeFused()
     		}
     	}
     	
-    	local serial_killer = SMODS.Joker:new("Serial Killer", "serial_killer", {extra = {Xmult_per = 0.25, Xmult = 2
+    	local d_serial_killer = SMODS.Joker:new("Serial Killer", "d_serial_killer", {extra = {Xmult_per = 0.25, Xmult = 2
     	}}, { x = 0, y = 0 }, serial_killer_def, 3, 10, true, true, true, true)
-    	SMODS.Sprite:new("j_serial_killer", mod_obj.path, "j_serial_killer.png", 71, 95, "asset_atli"):register();
-    	serial_killer:register()
+    	SMODS.Sprite:new("j_d_serial_killer", mod_obj.path, "j_serial_killer.png", 71, 95, "asset_atli"):register();
+    	d_serial_killer:register()
     
-    	function SMODS.Jokers.j_serial_killer.loc_def(card)
+    	function SMODS.Jokers.j_d_serial_killer.loc_def(card)
     		return {card.ability.extra.Xmult, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
     		localize{type = 'name_text', key = card.ability.extra.joker2, set = 'Joker'}}
     	end
     
-    	function SMODS.Jokers.j_serial_killer.calculate(self, context)
+    	function SMODS.Jokers.j_d_serial_killer.calculate(self, context)
             if context.setting_blind and not self.getting_sliced and not context.blueprint then
                 local my_pos = nil
                 for i = 1, #G.jokers.cards do
@@ -1400,21 +1400,21 @@ local big_loser_def = {
     }
 }
 
-local big_loser = SMODS.Joker:new("Big Loser", "f_big_loser", {
+local d_big_loser = SMODS.Joker:new("Big Loser", "d_f_big_loser", {
     extra = { 
         x_mult = 3,
         dollars = 4,
         poker_hand = "High Card"
     }
 }, {x = 0, y = 0}, big_loser_def, 3, 10, true, true, true, true)
-SMODS.Sprite:new("j_f_big_loser", mod_obj.path, "j_f_big_loser.png", 71, 95, "asset_atli"):register();
-big_loser:register()
+SMODS.Sprite:new("j_d_f_big_loser", mod_obj.path, "j_f_big_loser.png", 71, 95, "asset_atli"):register();
+d_big_loser:register()
 
-function SMODS.Jokers.j_f_big_loser.loc_def(card)
+function SMODS.Jokers.j_d_f_big_loser.loc_def(card)
     return { card.ability.extra.poker_hand }
 end
 
-function SMODS.Jokers.j_f_big_loser.calculate(self, context)
+function SMODS.Jokers.j_d_f_big_loser.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers then
                 if context.scoring_name == self.ability.extra.poker_hand then
                     G.E_MANAGER:add_event(Event({
@@ -1447,19 +1447,19 @@ local tightrope_def = {
     }
 }
 
-local tightrope = SMODS.Joker:new("Tight Rope", "f_tightrope", {
+local d_tightrope = SMODS.Joker:new("Tight Rope", "d_f_tightrope", {
     extra = { 
         x_mult = 3
     }
 }, {x = 0, y = 0}, tightrope_def, 3, 10, true, true, true, true)
-SMODS.Sprite:new("j_f_tightrope", mod_obj.path, "j_f_tightrope.png", 71, 95, "asset_atli"):register();
-tightrope:register()
+SMODS.Sprite:new("j_d_f_tightrope", mod_obj.path, "j_f_tightrope.png", 71, 95, "asset_atli"):register();
+d_tightrope:register()
 
-function SMODS.Jokers.j_f_tightrope.loc_def(card)
+function SMODS.Jokers.j_d_f_tightrope.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_f_tightrope.calculate(self, context)
+function SMODS.Jokers.j_d_f_tightrope.calculate(self, context)
            if context.joker_main and context.cardarea == G.jokers then
                 if G.GAME.current_round.hands_left == 0 then
                     self.ability.extra.x_mult = self.ability.extra.x_mult + 0.75
@@ -1486,19 +1486,19 @@ local monday_menace_def = {
     }
 }
 
-local monday_menace = SMODS.Joker:new("Monday Menace", "f_monday_menace", {
+local d_monday_menace = SMODS.Joker:new("Monday Menace", "d_f_monday_menace", {
     extra = {
         counter = 2
     }
 }, {x = 0, y = 0}, monday_menace_def, 2, 16, true, true, true, true)
-SMODS.Sprite:new("j_f_monday_menace", mod_obj.path, "j_f_monday_menace.png", 71, 95, "asset_atli"):register();
-monday_menace:register()
+SMODS.Sprite:new("j_d_f_monday_menace", mod_obj.path, "j_f_monday_menace.png", 71, 95, "asset_atli"):register();
+d_monday_menace:register()
 
-function SMODS.Jokers.j_f_monday_menace.loc_def(card)
+function SMODS.Jokers.j_d_f_monday_menace.loc_def(card)
     return { card.ability.extra.counter }
 end
 
-function SMODS.Jokers.j_f_monday_menace.calculate(self, context)
+function SMODS.Jokers.j_d_f_monday_menace.calculate(self, context)
            if context.reroll_shop and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                 if self.ability.extra.counter == 1 then
                     local tarot_or_planet = pseudorandom_element({1, 2}, pseudoseed('monday_menace'))
@@ -1555,19 +1555,19 @@ local typography_def = {
     }
 }
 
-local typography = SMODS.Joker:new("Typography Joker", "f_typography", {
+local d_typography = SMODS.Joker:new("Typography Joker", "d_f_typography", {
     extra = {
         mult = 10
     }
 }, {x = 0, y = 0}, typography_def, 2, 8, true, true, true, true)
-SMODS.Sprite:new("j_f_typography", mod_obj.path, "j_f_typography.png", 71, 95, "asset_atli"):register();
-typography:register()
+SMODS.Sprite:new("j_d_f_typography", mod_obj.path, "j_f_typography.png", 71, 95, "asset_atli"):register();
+d_typography:register()
 
-function SMODS.Jokers.j_f_typography.loc_def(card)
+function SMODS.Jokers.j_d_f_typography.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_f_typography.calculate(self, context)
+function SMODS.Jokers.j_d_f_typography.calculate(self, context)
            if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 5) and self ~= context.other_joker then
                 local CheckForFaces = true
                 for k, v in ipairs(context.full_hand) do
@@ -1600,19 +1600,19 @@ local party_animal_def = {
     }
 }
 
-local party_animal = SMODS.Joker:new("Party Animal", "f_party_animal", {
+local d_party_animal = SMODS.Joker:new("Party Animal", "d_f_party_animal", {
     extra = {
         chips = 0
     }
 }, {x = 0, y = 0}, party_animal_def, 2, 8, true, true, true, true)
-SMODS.Sprite:new("j_f_party_animal", mod_obj.path, "j_f_party_animal.png", 71, 95, "asset_atli"):register();
-party_animal:register()
+SMODS.Sprite:new("j_d_f_party_animal", mod_obj.path, "j_f_party_animal.png", 71, 95, "asset_atli"):register();
+d_party_animal:register()
 
-function SMODS.Jokers.j_f_party_animal.loc_def(card)
+function SMODS.Jokers.j_d_f_party_animal.loc_def(card)
     return { card.ability.extra.chips }
 end
 
-function SMODS.Jokers.j_f_party_animal.calculate(self, context)
+function SMODS.Jokers.j_d_f_party_animal.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers then
                 if (context.scoring_name == "High Card" or context.scoring_name == "Pair") then
                     self.ability.extra.chips = self.ability.extra.chips + 16
@@ -1637,19 +1637,19 @@ local fishclown_def = {
     }
 }
 
-local fishclown = SMODS.Joker:new("Fishclown", "f_fishclown", {
+local d_fishclown = SMODS.Joker:new("Fishclown", "d_f_fishclown", {
     extra = {
         x_mult = 1.5
     }
 }, {x = 0, y = 0}, fishclown_def, 3, 8, true, true, true, true)
-SMODS.Sprite:new("j_f_fishclown", mod_obj.path, "j_f_fishclown.png", 71, 95, "asset_atli"):register();
-fishclown:register()
+SMODS.Sprite:new("j_d_f_fishclown", mod_obj.path, "j_f_fishclown.png", 71, 95, "asset_atli"):register();
+d_fishclown:register()
 
-function SMODS.Jokers.j_f_fishclown.loc_def(card)
+function SMODS.Jokers.j_d_f_fishclown.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_f_fishclown.calculate(self, context)
+function SMODS.Jokers.j_d_f_fishclown.calculate(self, context)
             if context.individual and context.cardarea == G.play and context.other_card.ability.set == 'Enhanced' then
                 return {
                     message = localize { type = 'variable', key = 'a_xmult', vars = { self.ability.extra.x_mult } },
@@ -1671,19 +1671,19 @@ local original_character_def = {
     }
 }
 
-local original_character = SMODS.Joker:new("Original Character", "f_original_character", {
+local d_original_character = SMODS.Joker:new("Original Character", "d_f_original_character", {
     extra = {
         mult = 0
     }
 }, {x = 0, y = 0}, original_character_def, 2, 10, true, true, true, true)
-SMODS.Sprite:new("j_f_original_character", mod_obj.path, "j_f_original_character.png", 71, 95, "asset_atli"):register();
-original_character:register()
+SMODS.Sprite:new("j_d_f_original_character", mod_obj.path, "j_f_original_character.png", 71, 95, "asset_atli"):register();
+d_original_character:register()
 
-function SMODS.Jokers.j_f_original_character.loc_def(card)
+function SMODS.Jokers.j_d_f_original_character.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_f_original_character.calculate(self, context)
+function SMODS.Jokers.j_d_f_original_character.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers and self.ability.extra.mult >= 0 then
                 return {
                     message = localize { type = 'variable', key = 'a_mult', vars = { self.ability.extra.mult } },
