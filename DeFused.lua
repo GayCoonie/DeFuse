@@ -52,7 +52,7 @@ function Card:update(dt)
 end
 
 
-        if self.config.center.key == "j_d_f_original_character" then
+        if self.config.center.key == "j_d_original_character" then
             self.ability.extra.mult = (G.jokers.config.card_limit - #G.jokers.cards) * 12
             for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra = self.ability.extra + 6 end
@@ -1400,21 +1400,21 @@ local big_loser_def = {
     }
 }
 
-local d_big_loser = SMODS.Joker:new("Big Loser", "d_f_big_loser", {
+local d_big_loser = SMODS.Joker:new("Big Loser", "d_big_loser", {
     extra = { 
         x_mult = 3,
         dollars = 4,
         poker_hand = "High Card"
     }
 }, {x = 0, y = 0}, big_loser_def, 3, 10, true, true, true, true)
-SMODS.Sprite:new("j_d_f_big_loser", mod_obj.path, "j_f_big_loser.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_big_loser", mod_obj.path, "j_big_loser.png", 71, 95, "asset_atli"):register();
 d_big_loser:register()
 
-function SMODS.Jokers.j_d_f_big_loser.loc_def(card)
+function SMODS.Jokers.j_d_big_loser.loc_def(card)
     return { card.ability.extra.poker_hand }
 end
 
-function SMODS.Jokers.j_d_f_big_loser.calculate(self, context)
+function SMODS.Jokers.j_d_big_loser.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers then
                 if context.scoring_name == self.ability.extra.poker_hand then
                     G.E_MANAGER:add_event(Event({
@@ -1447,19 +1447,19 @@ local tightrope_def = {
     }
 }
 
-local d_tightrope = SMODS.Joker:new("Tight Rope", "d_f_tightrope", {
+local d_tightrope = SMODS.Joker:new("Tight Rope", "d_tightrope", {
     extra = { 
         x_mult = 3
     }
 }, {x = 0, y = 0}, tightrope_def, 3, 10, true, true, true, true)
-SMODS.Sprite:new("j_d_f_tightrope", mod_obj.path, "j_f_tightrope.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_tightrope", mod_obj.path, "j_tightrope.png", 71, 95, "asset_atli"):register();
 d_tightrope:register()
 
-function SMODS.Jokers.j_d_f_tightrope.loc_def(card)
+function SMODS.Jokers.j_d_tightrope.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_d_f_tightrope.calculate(self, context)
+function SMODS.Jokers.j_d_tightrope.calculate(self, context)
            if context.joker_main and context.cardarea == G.jokers then
                 if G.GAME.current_round.hands_left == 0 then
                     self.ability.extra.x_mult = self.ability.extra.x_mult + 0.75
@@ -1486,19 +1486,19 @@ local monday_menace_def = {
     }
 }
 
-local d_monday_menace = SMODS.Joker:new("Monday Menace", "d_f_monday_menace", {
+local d_monday_menace = SMODS.Joker:new("Monday Menace", "d_monday_menace", {
     extra = {
         counter = 2
     }
 }, {x = 0, y = 0}, monday_menace_def, 2, 16, true, true, true, true)
-SMODS.Sprite:new("j_d_f_monday_menace", mod_obj.path, "j_f_monday_menace.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_monday_menace", mod_obj.path, "j_monday_menace.png", 71, 95, "asset_atli"):register();
 d_monday_menace:register()
 
-function SMODS.Jokers.j_d_f_monday_menace.loc_def(card)
+function SMODS.Jokers.j_d_monday_menace.loc_def(card)
     return { card.ability.extra.counter }
 end
 
-function SMODS.Jokers.j_d_f_monday_menace.calculate(self, context)
+function SMODS.Jokers.j_d_monday_menace.calculate(self, context)
            if context.reroll_shop and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                 if self.ability.extra.counter == 1 then
                     local tarot_or_planet = pseudorandom_element({1, 2}, pseudoseed('monday_menace'))
@@ -1555,19 +1555,19 @@ local typography_def = {
     }
 }
 
-local d_typography = SMODS.Joker:new("Typography Joker", "d_f_typography", {
+local d_typography = SMODS.Joker:new("Typography Joker", "d_typography", {
     extra = {
         mult = 10
     }
 }, {x = 0, y = 0}, typography_def, 2, 8, true, true, true, true)
-SMODS.Sprite:new("j_d_f_typography", mod_obj.path, "j_f_typography.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_typography", mod_obj.path, "j_typography.png", 71, 95, "asset_atli"):register();
 d_typography:register()
 
-function SMODS.Jokers.j_d_f_typography.loc_def(card)
+function SMODS.Jokers.j_d_typography.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_d_f_typography.calculate(self, context)
+function SMODS.Jokers.j_d_typography.calculate(self, context)
            if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 5) and self ~= context.other_joker then
                 local CheckForFaces = true
                 for k, v in ipairs(context.full_hand) do
@@ -1600,19 +1600,19 @@ local party_animal_def = {
     }
 }
 
-local d_party_animal = SMODS.Joker:new("Party Animal", "d_f_party_animal", {
+local d_party_animal = SMODS.Joker:new("Party Animal", "d_party_animal", {
     extra = {
         chips = 0
     }
 }, {x = 0, y = 0}, party_animal_def, 2, 8, true, true, true, true)
-SMODS.Sprite:new("j_d_f_party_animal", mod_obj.path, "j_f_party_animal.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_party_animal", mod_obj.path, "j_party_animal.png", 71, 95, "asset_atli"):register();
 d_party_animal:register()
 
-function SMODS.Jokers.j_d_f_party_animal.loc_def(card)
+function SMODS.Jokers.j_d_party_animal.loc_def(card)
     return { card.ability.extra.chips }
 end
 
-function SMODS.Jokers.j_d_f_party_animal.calculate(self, context)
+function SMODS.Jokers.j_d_party_animal.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers then
                 if (context.scoring_name == "High Card" or context.scoring_name == "Pair") then
                     self.ability.extra.chips = self.ability.extra.chips + 16
@@ -1637,23 +1637,23 @@ local fishclown_def = {
     }
 }
 
-local d_fishclown = SMODS.Joker:new("Fishclown", "d_f_fishclown", {
+local d_fishclown = SMODS.Joker:new("Fishclown", "d_fishclown", {
     extra = {
         x_mult = 1.5
     }
 }, {x = 0, y = 0}, fishclown_def, 3, 8, true, true, true, true)
-SMODS.Sprite:new("j_d_f_fishclown", mod_obj.path, "j_f_fishclown.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_fishclown", mod_obj.path, "j_fishclown.png", 71, 95, "asset_atli"):register();
 d_fishclown:register()
 
-function SMODS.Jokers.j_d_f_fishclown.loc_def(card)
+function SMODS.Jokers.j_d_fishclown.loc_def(card)
     return { card.ability.extra.x_mult }
 end
 
-function SMODS.Jokers.j_d_f_fishclown.calculate(self, context)
-            if context.individual and context.cardarea == G.play and context.other_card.ability.set == 'Enhanced' then
+function SMODS.Jokers.j_d_fishclown.calculate(self, context)
+            if context.individual and context.cardarea == G.play and context.other_card.ability.effect ~= 'Base' then
                 return {
                     message = localize { type = 'variable', key = 'a_xmult', vars = { self.ability.extra.x_mult } },
-                    Xmult_mod = self.ability.extra.x_mult,
+                    x_mult = self.ability.extra.x_mult,
                     card = self
                 }
     end
@@ -1671,19 +1671,19 @@ local original_character_def = {
     }
 }
 
-local d_original_character = SMODS.Joker:new("Original Character", "d_f_original_character", {
+local d_original_character = SMODS.Joker:new("Original Character", "d_original_character", {
     extra = {
         mult = 0
     }
 }, {x = 0, y = 0}, original_character_def, 2, 10, true, true, true, true)
-SMODS.Sprite:new("j_d_f_original_character", mod_obj.path, "j_f_original_character.png", 71, 95, "asset_atli"):register();
+SMODS.Sprite:new("j_d_original_character", mod_obj.path, "j_original_character.png", 71, 95, "asset_atli"):register();
 d_original_character:register()
 
-function SMODS.Jokers.j_d_f_original_character.loc_def(card)
+function SMODS.Jokers.j_d_original_character.loc_def(card)
     return { card.ability.extra.mult }
 end
 
-function SMODS.Jokers.j_d_f_original_character.calculate(self, context)
+function SMODS.Jokers.j_d_original_character.calculate(self, context)
             if context.joker_main and context.cardarea == G.jokers and self.ability.extra.mult >= 0 then
                 return {
                     message = localize { type = 'variable', key = 'a_mult', vars = { self.ability.extra.mult } },
