@@ -1032,6 +1032,13 @@ function SMODS.INIT.DeFused()
     	d_moorstone:register()
     
     	function SMODS.Jokers.j_d_moorstone.loc_def(card)
+    	    card.ability.stone_tally = 0
+    	    if G.playing_cards then
+                for k, v in pairs(G.playing_cards) do
+                    if v.config.center == G.P_CENTERS.m_stone then card.ability.stone_tally = card.ability.stone_tally+1 end
+                end
+            end
+
     	    card.ability.extra.chips = card.ability.extra.chips_add*(card.ability.stone_tally or 0)
     		return {card.ability.extra.chips_add, card.ability.extra.chips, card.ability.extra.count, 
     		localize{type = 'name_text', key = card.ability.extra.joker1, set = 'Joker'}, 
@@ -1054,7 +1061,6 @@ function SMODS.INIT.DeFused()
                             G.deck.config.card_limit = G.deck.config.card_limit + 1
                             table.insert(G.playing_cards, card)
                             G.hand:emplace(card)
-                            card.states.visible = nil
     
                             return true
                         end}))
