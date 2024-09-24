@@ -14,8 +14,9 @@ G.localization.misc.dictionary["k_flipped_ex"] = "Flipped!"
 G.localization.misc.dictionary["k_copied_ex"] = "Cloned!"
 G.localization.misc.dictionary["k_in_tact_ex"] = "In-Tact!"
 G.localization.misc.dictionary["b_fuse"] = "FUSE"
-G.localization.misc.v_dictionary.sweet_theatre_combo = {"+#1#mult +#2#chips"}
-G.localization.misc.v_dictionary.melancholy_phantom = {"X#1#mult +#2#chips"}
+G.localization.misc.v_dictionary.d_sweet_theatre_combo = {"+#1#mult +#2#chips"}
+G.localization.misc.v_dictionary.d_fight_a_bull = {"+#1#mult +#2#chips"}
+G.localization.misc.v_dictionary.d_melancholy_phantom = {"X#1#mult +#2#chips"}
 
 DeFused = {}
 
@@ -946,7 +947,7 @@ function SMODS.INIT.DeFused()
             
             if context.cardarea == G.jokers and not context.after and not context.before then
                 return {
-    				message = localize{type='variable',key='sweet_theatre_combo',vars={card.ability.extra.mult,card.ability.extra.chips}},
+    				message = localize{type='variable',key='d_sweet_theatre_combo',vars={card.ability.extra.mult,card.ability.extra.chips}},
     				mult_mod = card.ability.extra.mult,
     				chip_mod = card.ability.extra.chips,
     			}
@@ -1185,8 +1186,10 @@ function SMODS.INIT.DeFused()
                 card.ability.extra.mult = 2*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
                 card.ability.extra.chips = 8*math.max(0,math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.dollars))
                 
+
+
                 return {
-    				message = localize{type='variable',key='d_sweet_theatre_combo',vars={card.ability.extra.mult,card.ability.extra.chips}},
+    				message = localize{type='variable',key='d_fight_a_bull',vars={card.ability.extra.mult,card.ability.extra.chips}},
     				mult_mod = card.ability.extra.mult,
     				chip_mod = card.ability.extra.chips,
     			}
