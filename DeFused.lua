@@ -1578,10 +1578,15 @@ end
 
 function SMODS.Jokers.j_d_typography.calculate(self, context)
            if context.other_joker and (context.other_joker.config.center.rarity == 1 or context.other_joker.config.center.rarity == 5) and self ~= context.other_joker then
+
                 local CheckForFaces = true
+
+         if context.full_hand then
                 for k, v in ipairs(context.full_hand) do
                     CheckForFaces = CheckForFaces and not v:is_face()
                 end
+         end
+
                 if not CheckForFaces then
                     return nil
                 end
